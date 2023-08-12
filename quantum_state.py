@@ -12,7 +12,7 @@ class QuantumState:
             self.normalize()
         elif n_qubits is not None:
             self.n_qubits = n_qubits
-            self.n_dimensions = n_qubits**2
+            self.n_dimensions = 2**n_qubits
             if configuration is not None: 
                 self._state = np.zeros(self.n_dimensions, dtype=complex)
                 for key, item in configuration.items():
@@ -31,6 +31,9 @@ class QuantumState:
             warnings.warn('Attention: State is not normalized. Performing normalization automatically.')
             self._state /= np.sqrt(norm2)
 
+    def copy(self):
+        return QuantumState(state=self._state.copy())
+
     def __getitem__(self, index):
         return self._state[index]
     
@@ -48,5 +51,9 @@ class QuantumState:
     
     def __len__(self):
         return len(self._state)
+    
+    def __imul__(self, factor):
+        self._state *= factor
+        return self
     
 

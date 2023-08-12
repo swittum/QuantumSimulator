@@ -39,7 +39,7 @@ class Diffuser(QuantumCircuit):
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
     n_qubits = 4
-    tag = 15
+    tag = 4
     N = int(np.pi/(4*np.arcsin(1/np.sqrt(2**n_qubits)))-1/2)
     qc = QuantumCircuit(n_qubits)
     for i in range(n_qubits):

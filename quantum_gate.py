@@ -33,7 +33,6 @@ class NotGate(QuantumGate):
         super().__init__(n_qubits, n_act, n_control)
 
     def act_on(self, state):
-        # new_state = np.zeros(len(state), dtype=complex)
         new_state = QuantumState(n_qubits=state.n_qubits)
         for state_label in range(self.n_dimensions):
             state_control = get_nth_bit(state_label, self.n_control) if self.n_control is not None else 1
@@ -51,7 +50,7 @@ class HadamardGate(QuantumGate):
         super().__init__(n_qubits, n_act, n_control)
 
     def act_on(self, state):
-        new_state = np.zeros(self.n_dimensions, dtype=complex)
+        new_state = QuantumState(n_qubits=self.n_qubits)
         for state_label in range(self.n_dimensions):
             state_control = get_nth_bit(state_label, self.n_control) if self.n_control is not None else 1
             if state_control == 1:
@@ -69,7 +68,7 @@ class PauliXGate(QuantumGate):
         super().__init__(n_qubits, n_act, n_control)
     
     def act_on(self, state):
-        new_state = np.zeros(self.n_dimensions, dtype=complex)
+        new_state = QuantumState(n_qubits=self.n_qubits)
         for state_label in range(self.n_dimensions):
             state_control = get_nth_bit(state_label, self.n_control) if self.n_control is not None else 1
             if state_control == 1:
@@ -84,7 +83,7 @@ class PauliYGate(QuantumGate):
         super().__init__(n_qubits, n_act, n_control)
 
     def act_on(self, state):
-        new_state = np.zeros(self.n_dimensions, dtype=complex)
+        new_state = QuantumState(n_qubits=self.n_qubits)
         for state_label in range(self.n_dimensions):
             state_control = get_nth_bit(state_label, self.n_control) if self.n_control is not None else 1
             if state_control == 1:
@@ -100,7 +99,7 @@ class PauliZGate(QuantumGate):
         super().__init__(n_qubits, n_act, n_control)
 
     def act_on(self, state):
-        new_state = np.zeros(self.n_dimensions, dtype=complex)
+        new_state = QuantumState(self.n_qubits)
         for state_label in range(self.n_dimensions):
             state_control = get_nth_bit(state_label, self.n_control) if self.n_control is not None else 1
             if state_control == 1:
@@ -117,7 +116,7 @@ class XRotationGate(QuantumGate):
         self.phi = phi
 
     def act_on(self, state):
-        new_state = np.zeros(self.n_dimensions, dtype=complex)
+        new_state = QuantumState(n_qubits=self.n_qubits)
         for state_label in range(self.n_dimensions):
             state_control = get_nth_bit(state_label, self.n_control) if self.n_control is not None else 1
             if state_control == 1:
@@ -134,7 +133,7 @@ class YRotationGate(QuantumGate):
         self.phi = phi
 
     def act_on(self, state):
-        new_state = np.zeros(self.n_dimensions, dtype=complex)
+        new_state = QuantumState(n_qubits=self.n_qubits)
         for state_label in range(self.n_dimensions):
             state_control = get_nth_bit(state_label, self.n_control) if self.n_control is not None else 1
             if state_control == 1:
@@ -152,7 +151,7 @@ class ZRotationGate(QuantumGate):
         self.phi = phi
 
     def act_on(self, state):
-        new_state = np.zeros(self.n_dimensions, dtype=complex)
+        new_state = QuantumState(n_qubits=self.n_qubits)
         for state_label in range(self.n_dimensions):
             state_control = get_nth_bit(state_label, self.n_control) if self.n_control is not None else 1
             if state_control == 1:
@@ -170,7 +169,7 @@ class RotationGate(QuantumGate):
         self.phi = phi
 
     def act_on(self, state):
-        new_state = np.zeros(self.n_dimensions, dtype=complex)
+        new_state = QuantumState(n_qubits=self.n_qubits)
         w = np.exp(1j*self.phi)
         for state_label in range(self.n_dimensions):
             state_control = get_nth_bit(state_label, self.n_control) if self.n_control is not None else 1
@@ -208,7 +207,3 @@ class InverseQFTGate(QuantumGate):
                 new_state = RotationGate(self.n_qubits, qubit, phi, i+qubit).act_on(new_state)
             new_state = HadamardGate(self.n_qubits, qubit).act_on(new_state)
         return new_state
-    
-
-if __name__ == '__main__':
-    pass

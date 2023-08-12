@@ -35,6 +35,8 @@ def main():
     quantum_circuit.add_gate(PhaseOracle(n_qubits+1, action='random'))
     for i in range(n_qubits+1):
         quantum_circuit.add_gate(HadamardGate(n_qubits+1, i))
+
+    quantum_circuit.execute()
     results = quantum_circuit.run(register=n_qubits, shots=1000)
     plt.hist(results)
     plt.show()
@@ -42,3 +44,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    print('Done')

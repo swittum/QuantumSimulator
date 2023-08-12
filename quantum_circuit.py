@@ -1,5 +1,6 @@
 import numpy as np
 from quantum_gate import *
+from quantum_state import QuantumState
 
 
 class QuantumCircuit(QuantumGate):
@@ -7,8 +8,7 @@ class QuantumCircuit(QuantumGate):
         self.n_qubits = n_qubits
         self.n_dimensions = 2**n_qubits
         self.gates = []
-        self.psi0 = np.zeros(self.n_dimensions, dtype=complex)
-        self.psi0[0] = 1
+        self.psi0 = QuantumState(state=[1]+(self.n_dimensions-1)*[0])
 
     def add_gate(self, gate):
         self.gates.append(gate)
@@ -20,7 +20,7 @@ class QuantumCircuit(QuantumGate):
         return new_state
     
     def execute(self, register=None, state=None):
-        if register is None: register=self.n_qubits
+        if register is None: register=self.n_dimensions
         new_state = self.act_on(state)
         probs = np.array([np.abs(coefficient)**2 for coefficient in new_state])
         probs_cumulated = np.cumsum(probs)
@@ -30,19 +30,20 @@ class QuantumCircuit(QuantumGate):
                 return i % register
         return i % register
     
-    def run(self, register, shots=100, state=None):
+    def run(self, register=None, shots=100, state=None):
+        if register is None: register=self.n_dimensions
         results = []
         for _ in range(shots):
             results.append(self.execute(register, state))
         return np.array(results)
 
     
-if __name__ == '__main__':
-    import matplotlib.pyplot as plt
-    quantum_circuit = QuantumCircuit(10)
-    for i in range(10):
-        quantum_circuit.add_gate(HadamardGate(10, i))
-    out = quantum_circuit.run(shots=1000)
-    plt.hist(out)
-    plt.show()
+# if __name__ == '__main__':
+#     import matplotlib.pyplot as plt
+#     quantum_circuit = QuantumCircuit(10)
+#     for i in range(10):
+#         quantum_circuit.add_gate(HadamardGate(10, i))
+#     out = quantum_circuit.run(shots=1000)
+#     plt.hist(out)
+#     plt.show()
     
