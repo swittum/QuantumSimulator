@@ -1,0 +1,4 @@
+## Quantum Simulator
+This repository contains a python implementation of a simulation device for a quantum computer. In the file "quantum_circuit.py", you can find the code which defines the basic features and properties of a quantum circuit. Every quantum circuit is assembled by shutting different quantum gates together. The class definitions of some elementary quantum gates including their controlled versions are stored in "quantum_gate.py". The general form of a quantum state, mathematically a complex multi particle state vector in Fock space, is contained in the file "quantum_state.py". 
+
+For use examples, check out the "examples" folder to see an implementation of the famous Deutsch-Josza and Grover algorithms.
